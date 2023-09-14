@@ -1,22 +1,67 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import usersService from '../services/users'
 import Blog from './Blog';
 import AddBlog from './AddBlog';
 import blogService from '../services/blogs.js'
+import Togglable from './togglable';
 
 const Dashboard = ({token, handleMessage, clearToken}) => {
     const [user, setUser] = useState(null);
     const [blogs, setBlogs] = useState(null);
+    const addBlogRef = useRef();
+
+    const sortFunc = (a, b) => a.likes > b.likes ? -1 : 1;
 
     const addNewBlog = (blog) => {
         blogService.postBlog(blog, token)
         .then((blog) => {
-            setBlogs(blogs => [blog, ...blogs])
+            addBlogRef.current.toggleVisibility()
+            setBlogs(blogs => [blog, ...blogs].sort(sortFunc))
             handleMessage(`Added new blog, blog title${blog.title}, blog author${blog.author}, 200`);
         })
         .catch((e) => {
             handleMessage("Blog could not be added, 500")
             console.log(e)
+        })
+    }
+
+    const incrementLike = (id) => {
+        blogService.putBlog(id, {$inc: { 'likes': 1 }}, token).then((updatedBlog) => {
+            setBlogs(blogs => {
+                return blogs.map((blog) => {
+                    if(blog.id === updatedBlog.id){
+                        return updatedBlog
+                    }
+
+                    return blog
+                }).sort(sortFunc)
+            })
+
+            handleMessage(`Blog liked, 200`)
+        }).catch((e) => {
+            handleMessage(`Some problem encountered in incrementing the likes, 200`)
+            console.log(e)
+        })
+    }
+
+    const removeBlog = (blog) => {
+        if(!window.confirm(`Remove Blog ${blog.title} by ${blog.author}`)) {
+            return;
+        }
+        
+        blogService.deleteBlog(blog.id, token).then(() => {
+            const index = blogs.map(blog => blog.id).indexOf(blog.id);
+            setBlogs(blogs => {
+                const updatesBlogs = [...blogs]
+                if (index > -1) {
+                    updatesBlogs.splice(index, 1); 
+                }
+                return updatesBlogs
+            })
+            handleMessage("Operation successful, 204")
+        }).catch((e) => {
+            console.log(e)
+            handleMessage("Operation unsuccessful, 204")
         })
     }
 
@@ -29,7 +74,7 @@ const Dashboard = ({token, handleMessage, clearToken}) => {
     useEffect(() => {
         usersService.getUser(token).then((user) => {
             setUser(user);
-            setBlogs(user.blogs)
+            setBlogs(user.blogs.sort(sortFunc))
             handleMessage("You are logged in, 200");
         }).catch((e) => {
             setUser(null)
@@ -45,12 +90,16 @@ const Dashboard = ({token, handleMessage, clearToken}) => {
                 <h2>blogs</h2>
                 <button onClick={handleLogout}>Logout</button>
     
+                <div>
                 {blogs.map(blog =>
-                    <Blog key={blog.id} blog={blog} />
+                    <Blog key={blog.id} blog={blog} userName={user.name} incrementLike={incrementLike} removeBlog={removeBlog}/>
                 )}
+                </div>
     
                 <h3>Add blog</h3>
-                <AddBlog addNewBlog={addNewBlog}/>
+                <Togglable buttonLabel='Show' ref={addBlogRef}>
+                    <AddBlog addNewBlog={addNewBlog}/>
+                </Togglable>
             </>
                     
         )
