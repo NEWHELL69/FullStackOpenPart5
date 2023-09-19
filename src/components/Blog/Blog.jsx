@@ -1,19 +1,20 @@
 const Blog = ({ blog, userName, incrementLike, removeBlog }) => {
-  const ulCss = {
+  const blogUlCss = {
     padding: 0,
     margin: 0,
     listStyleType: 'none'
   };
 
+  // Instead of using state to render conditionally I am using HTML implementation of disclosure widget.
   return (
-    <div>
+    <div className="blog">
       <details>
         <summary>{blog.title}, {" " + blog.author}</summary>
-        <ul style={ulCss}>
+        <ul style={blogUlCss}>
           <li>{blog.url}</li>
           <li>
             {blog.likes}
-            <button onClick={() => incrementLike(blog.id)}>Like</button>
+            <button id="likeBtn" onClick={() => incrementLike(blog.id)}>Like</button>
             </li>
           <li>{userName}</li>
         </ul>

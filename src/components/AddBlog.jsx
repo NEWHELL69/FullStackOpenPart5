@@ -22,6 +22,7 @@ const AddBlog = (props) => {
                     type="text"
                     value={title}
                     name="Title"
+                    placeholder="Title"
                     onChange={({ target }) => setTitle(target.value)}
                     />
                 </div>
@@ -31,6 +32,7 @@ const AddBlog = (props) => {
                     type="text"
                     value={author}
                     name="Author"
+                    placeholder="Author"
                     onChange={({ target }) => setAuthor(target.value)}
                     />
                 </div>
@@ -40,6 +42,7 @@ const AddBlog = (props) => {
                     type="text"
                     value={url}
                     name="URL"
+                    placeholder="URL"
                     onChange={({ target }) => setURL(target.value)}
                     />
                 </div>

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import usersService from '../services/users'
-import Blog from './Blog';
+import Blog from './Blog/Blog';
 import AddBlog from './AddBlog';
 import blogService from '../services/blogs.js'
 import Togglable from './togglable';

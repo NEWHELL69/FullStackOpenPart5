@@ -1,0 +1,1 @@
+1. Use ref to handle messages. EveryTime handleMessage is called whole app is rendered again.
