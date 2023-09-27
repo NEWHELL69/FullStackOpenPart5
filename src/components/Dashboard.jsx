@@ -17,7 +17,7 @@ const Dashboard = ({token, handleMessage, clearToken}) => {
         .then((blog) => {
             addBlogRef.current.toggleVisibility()
             setBlogs(blogs => [blog, ...blogs].sort(sortFunc))
-            handleMessage(`Added new blog, blog title${blog.title}, blog author${blog.author}, 200`);
+            handleMessage(`Added new blog, blog title ${blog.title}, blog author ${blog.author}, 200`);
         })
         .catch((e) => {
             handleMessage("Blog could not be added, 500")
@@ -90,7 +90,7 @@ const Dashboard = ({token, handleMessage, clearToken}) => {
                 <h2>blogs</h2>
                 <button onClick={handleLogout}>Logout</button>
     
-                <div>
+                <div id='blogList'>
                 {blogs.map(blog =>
                     <Blog key={blog.id} blog={blog} userName={user.name} incrementLike={incrementLike} removeBlog={removeBlog}/>
                 )}

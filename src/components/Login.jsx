@@ -2,8 +2,8 @@ import { useState } from 'react'
 
 
 const Login = ({ handleLogin }) => {
-    const [username, setUsername] = useState('johnDoe123') 
-    const [password, setPassword] = useState('p@ssw0rd')
+    const [username, setUsername] = useState('') 
+    const [password, setPassword] = useState('')
 
     const handleCredentials = (event) => {
         event.preventDefault()

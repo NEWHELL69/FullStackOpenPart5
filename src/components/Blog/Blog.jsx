@@ -13,8 +13,8 @@ const Blog = ({ blog, userName, incrementLike, removeBlog }) => {
         <ul style={blogUlCss}>
           <li>{blog.url}</li>
           <li>
-            {blog.likes}
-            <button id="likeBtn" onClick={() => incrementLike(blog.id)}>Like</button>
+            <span class="likeCount">{blog.likes}</span>
+            <button class="likeBtn" onClick={() => incrementLike(blog.id)}>Like</button>
             </li>
           <li>{userName}</li>
         </ul>

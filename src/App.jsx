@@ -60,6 +60,7 @@ const App = () => {
 
   return (
     <>
+      <h1>Blogs</h1>
       <Message initialMessage={message} initialMessageId={messageId}/>
       {token && <Dashboard token={token} handleMessage={handleMessage} clearToken={clearToken}/>}
       {!token && <Login handleLogin={handleLogin}></Login>}

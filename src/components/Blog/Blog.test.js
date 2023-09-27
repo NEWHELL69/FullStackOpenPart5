@@ -57,7 +57,7 @@ describe('<Blog />', () => {
     expect(mockHandler.mock.calls).toHaveLength(2)
   })
 
-  // Test 4: New blog form component calls the handler passed with right details 
+  // Test 4: New blog form component calls the handler with right details 
   test('Checking new blog form', async () => {
     const mockHandler = jest.fn()
     const container = render(
