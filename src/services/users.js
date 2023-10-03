@@ -3,13 +3,13 @@ const baseUrl = 'http://localhost:3003/api/users'
 
 const getUser = async (token) => {
   const axiosResponse = await axios.get(`${baseUrl}/singleUser`,
-  {
+    {
       headers: {
         'authorization': `Bearer ${token}`
       }
-  })
+    })
 
-  return axiosResponse.data;
+  return axiosResponse.data
 }
 
-export default {getUser}
+export default { getUser }

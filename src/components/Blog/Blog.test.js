@@ -8,19 +8,27 @@ import AddBlog from '../AddBlog'
 // Instead of using state to render conditionally I am using HTML implementation of disclosure widget.
 // Tests are written for this widget.
 describe('<Blog />', () => {
-  let container;
-  const userName = "Me"
+  let container
+  const user = {
+    name: 'Me',
+    blogs: [],
+    id: '12'
+  }
+
   const blog = {
-    title: "Something",
-    author: "Some old guy",
-    url: "www.some.com",
+    title: 'Something',
+    author: 'Some old guy',
+    url: 'www.some.com',
     likes: 50,
-    id: "0123456789"
+    id: '0123456789',
+    userId: {
+      id: `${user.id}`
+    }
   }
 
   beforeEach(() => {
     container = render(
-      <Blog blog={blog} userName={userName} incrementLike={() => {}} removeBlog={() => {}} />
+      <Blog blog={blog} user={user} incrementLike={() => {}} removeBlog={() => {}} />
     ).container
   })
 
@@ -29,8 +37,8 @@ describe('<Blog />', () => {
     // This test checks wheather the boolean attribute "open" on details, which controls the disclosure widget, is
     // absent when initially rendered.
 
-    const details = container.querySelector(`details`);
-    expect(details.hasAttribute("open")).toBeFalsy()
+    const details = container.querySelector('details')
+    expect(details.hasAttribute('open')).toBeFalsy()
   })
 
   // Test 2: URL and Likes fields are visible when expanded.
@@ -38,42 +46,42 @@ describe('<Blog />', () => {
     // This test checks wheather the boolean attribute "open" on details, which controls the disclosure widget, is
     // present when the widget is expanded by clicking.
 
-    const details = container.querySelector(`details`);
-    details.open = true;
-    expect(details.hasAttribute).toBeTruthy();
+    const details = container.querySelector('details')
+    details.open = true
+    expect(details.hasAttribute).toBeTruthy()
   })
 
-  // Test 3: Like button is called twice.   
+  // Test 3: Like button is called twice.
   test('Checking like button works', async () => {
     const mockHandler = jest.fn()
     const container = render(
-      <Blog blog={blog} userName={userName} incrementLike={mockHandler} removeBlog={() => {}} />
+      <Blog blog={blog} user={user} incrementLike={mockHandler} removeBlog={() => {}} />
     ).container
-    const user = userEvent.setup()
+    const mockUser = userEvent.setup()
 
-    const likeBtn = container.querySelector('#likeBtn');
-    await user.click(likeBtn);
-    await user.click(likeBtn);
+    const likeBtn = container.querySelector('.likeBtn')
+    await mockUser.click(likeBtn)
+    await mockUser.click(likeBtn)
     expect(mockHandler.mock.calls).toHaveLength(2)
   })
 
-  // Test 4: New blog form component calls the handler with right details 
+  // Test 4: New blog form component calls the handler with right details
   test('Checking new blog form', async () => {
     const mockHandler = jest.fn()
     const container = render(
       <AddBlog addNewBlog={mockHandler}/>
     ).container
-    const user = userEvent.setup()
+    const mockUser = userEvent.setup()
 
     const titleInput = screen.getByPlaceholderText('Title')
-    await user.type(titleInput, blog.title)
+    await mockUser.type(titleInput, blog.title)
     const authorInput = screen.getByPlaceholderText('Author')
-    await user.type(authorInput, blog.author)
+    await mockUser.type(authorInput, blog.author)
     const URLInput = screen.getByPlaceholderText('URL')
-    await user.type(URLInput, blog.url)
+    await mockUser.type(URLInput, blog.url)
 
     const submitFormBtn = screen.getByText('submit')
-    await user.click(submitFormBtn)
+    await mockUser.click(submitFormBtn)
 
     expect(mockHandler.mock.calls[0][0].title).toBe(blog.title)
     expect(mockHandler.mock.calls[0][0].author).toBe(blog.author)

@@ -1,29 +1,29 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react'
 
 const Message = ({ initialMessage, initialMessageId }) => {
-    const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState(null)
 
-    useEffect(() => {
-        if(!initialMessage || !initialMessageId) {
-            return;
-        }
+  useEffect(() => {
+    if(!initialMessage || !initialMessageId) {
+      return
+    }
 
-        setMessage(initialMessage)
+    setMessage(initialMessage)
 
-        const timeoutId = setTimeout(() => {
-            setMessage('')
-        }, 5000)
+    const timeoutId = setTimeout(() => {
+      setMessage('')
+    }, 5000)
 
-        return (() => {
-            clearInterval(timeoutId)
-        })
-    }, [initialMessageId])
+    return (() => {
+      clearInterval(timeoutId)
+    })
+  }, [initialMessageId])
 
-    return (
-        <div>
-            <p>{message}</p>
-        </div>  
-    )
+  return (
+    <div>
+      <p>{message}</p>
+    </div>
+  )
 }
-  
+
 export default Message

@@ -1,14 +1,14 @@
 const user = {
-  "username": "user456",
-  "name": "Emily Johnson",
-  "password": "secure987"
+  'username': 'user456',
+  'name': 'Emily Johnson',
+  'password': 'secure987'
 }
 
 const blog =   {
-  "title": "Algorithms Unveiled",
-  "author": "Alan Turing",
-  "url": "http://www.example.com/unveiled-algorithms.pdf",
-  "likes": 0
+  'title': 'Algorithms Unveiled',
+  'author': 'Alan Turing',
+  'url': 'http://www.example.com/unveiled-algorithms.pdf',
+  'likes': 0
 }
 
 describe('Blog app', function() {
@@ -43,7 +43,7 @@ describe('Blog app', function() {
       cy.get('input:first').type(user.username)
       cy.get('input:last').type(user.password)
       cy.contains('login').click()
-      cy.contains('You are logged in, 200')    
+      cy.contains('You are logged in, 200')
     })
 
     it('A blog can be created', function() {
