@@ -121,7 +121,7 @@ const Dashboard = ({ token, handleMessage, clearToken }) => {
 }
 
 Dashboard.propTypes = {
-  token: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
   handleMessage: PropTypes.func.isRequired,
   clearToken: PropTypes.func.isRequired,
 }

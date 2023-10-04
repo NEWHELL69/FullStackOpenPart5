@@ -1,5 +1,4 @@
 const Blog = ({ blog, user, incrementLike, removeBlog }) => {
-  {console.log(blog, user)}
   const blogUlCss = {
     padding: 0,
     margin: 0,
@@ -19,7 +18,7 @@ const Blog = ({ blog, user, incrementLike, removeBlog }) => {
           </li>
           <li>{user.name}</li>
         </ul>
-        {blog.userId.id === user.id ? <button onClick={() => removeBlog(blog)}>Remove</button> : <></>}
+        {(blog.userId.id ? blog.userId.id : blog.userId) === user.id ? <button className='removeBtn' onClick={() => removeBlog(blog)}>Remove</button> : <></>}
       </details>
     </div>
   )
