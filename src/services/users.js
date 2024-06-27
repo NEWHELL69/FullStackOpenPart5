@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3003/api/users'
+const baseUrl = '/api/users'
 
 const getUser = async (token) => {
   const axiosResponse = await axios.get(`${baseUrl}/singleUser`,
